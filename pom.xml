@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <groupId>org.example</groupId>
     <artifactId>spring-boot-ear-skinny-war</artifactId>
     <packaging>pom</packaging>
@@ -17,21 +18,10 @@
         <compiler.source>1.8</compiler.source>
         <compiler.target>1.8</compiler.target>
 
-        <versions.spring.boot>2.0.2.RELEASE</versions.spring.boot>
+        <versions.spring.boot>2.0.3.RELEASE</versions.spring.boot>
         <versions.com.fasterxml>2.9.5</versions.com.fasterxml>
         <versions.spring.boot.legacy>2.0.0</versions.spring.boot.legacy>
     </properties>
-
-    <modules>
-        <module>ear</module>
-	    <module>platform</module>
-        <module>skinny-ear</module>
-        <module>skinny-war</module>
-        <module>servlet-container-initializer-meta-inf</module>
-        <module>web0</module>
-        <module>web1</module>
-        <module>web2</module>
-    </modules>
 
     <dependencyManagement>
         <dependencies>
@@ -109,9 +99,59 @@
                         <failOnMissingWebXml>false</failOnMissingWebXml>
                     </configuration>
                 </plugin>
-
             </plugins>
         </pluginManagement>
     </build>
 
+    <profiles>
+        <profile>
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+                <module>ear</module>
+                <module>platform</module>
+                <module>servlet-container-initializer-meta-inf</module>
+                <module>skinny-ear</module>
+                <module>skinny-war</module>
+                <module>web0</module>
+                <module>web1</module>
+                <module>web2</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>web0</id>
+            <modules>
+                <module>web0</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>skinny-war-ear</id>
+            <modules>
+                <module>ear</module>
+                <module>servlet-container-initializer-meta-inf</module>
+                <module>web1</module>
+                <module>web2</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>skinny-war-platform</id>
+            <modules>
+                <module>platform</module>
+                <module>servlet-container-initializer-meta-inf</module>
+                <module>skinny-war</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>skinny-ear-platform</id>
+            <modules>
+                <module>platform</module>
+                <module>servlet-container-initializer-meta-inf</module>
+                <module>skinny-ear</module>
+                <module>web1</module>
+                <module>web2</module>
+            </modules>
+        </profile>
+    </profiles>
 </project>
